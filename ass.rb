@@ -27,6 +27,7 @@ module Olayemi
 
     def list
       return [] if @notes.empty?
+	  @notes = $db.execute("SELECT * FROM my_notes")
 	  array = []
 	  for row in @notes
 		array << "Note ID: #{row[0]}\n #{row[1]}\n\nBy Author #{@name}\n\n"
@@ -67,7 +68,7 @@ module Olayemi
     private
 
     def check_if_note_exists(note_id)
-      raise 'Note does not exist' if @notes[note_id].nil?
+      return 'Note does not exist' if @notes[note_id].nil?
       nil
     end
 

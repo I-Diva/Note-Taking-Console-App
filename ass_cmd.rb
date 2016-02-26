@@ -4,9 +4,6 @@ require 'firebase'
 require 'sqlite3'
 require './ass'
 include Olayemi
-json = File.read('input.json')
-obj = JSON.parse(json)
-puts obj
 def start
   puts 'Please Enter the Authors name: '
   author_name = gets.chomp
@@ -34,7 +31,7 @@ def edit
 end
 
 def list
-  puts $author.list
+  $author.list.each {|x| print x}
   ask
 end
 
@@ -90,6 +87,7 @@ def ask
     else 
 	  json = File.read('input.json')
 	  obj = JSON.parse(json)
+	  puts obj
     end
 
   end
