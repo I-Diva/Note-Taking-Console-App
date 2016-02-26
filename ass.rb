@@ -54,6 +54,7 @@ module Olayemi
 
     def search(search_text)
       check_note_input search_text
+	  @notes = $db.execute("SELECT * FROM my_notes")
       result = {}
       @notes.each_with_index do |text, index|
         result[index] = text unless (text =~ /(#{search_text})/).nil?
