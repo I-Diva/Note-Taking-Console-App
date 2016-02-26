@@ -1,6 +1,12 @@
+require 'rubygems'
+require 'json'
+require 'firebase'
+require 'sqlite3'
 require './ass'
 include Olayemi
-
+json = File.read('input.json')
+obj = JSON.parse(json)
+puts obj
 def start
   puts 'Please Enter the Authors name: '
   author_name = gets.chomp
@@ -11,6 +17,7 @@ end
 def create
   puts 'Enter your note: '
   text = gets.chomp
+  
   $author.create text
   ask
 end
@@ -54,6 +61,9 @@ def search
 
   ask
 end
+def export
+	puts $author.export.to_h.to_json
+end
 
 def ask
   puts
@@ -64,7 +74,7 @@ def ask
   if answer == 'y'
     puts 'What do you want to do?: '
     puts 'Choose from the following: '
-    print '> create < ', ' > edit < ', ' > list < ', ' > delete < ', ' > search < '
+    print '> create < ', ' > edit < ', ' > list < ', ' > delete < ', ' > search < ',' > export < '
     puts
     puts
 
@@ -76,7 +86,10 @@ def ask
     when 'list' then list
     when 'delete' then delete
     when 'search' then search
-    else ask
+	when 'export' then export
+    else 
+	  json = File.read('input.json')
+	  obj = JSON.parse(json)
     end
 
   end

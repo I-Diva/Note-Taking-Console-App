@@ -17,7 +17,7 @@ module Olayemi
       check_note_input note_content
       sql = "INSERT INTO my_notes (`note_content`) VALUES ('#{note_content}')"
 	  $db.execute(sql)
-	  $db.close
+	  
     end
 
     def get(note_id)
@@ -27,9 +27,12 @@ module Olayemi
 
     def list
       return [] if @notes.empty?
-      @notes.each do |x|
-        return "Note ID: #{@notes.index(x)}\n #{x}\n\nBy Author #{@name}\n"
+	  array = []
+	  for row in @notes
+		array << "Note ID: #{row[0]}\n #{row[1]}\n\nBy Author #{@name}\n\n"
       end
+	  array
+      
     end
 
     def edit(note_id, new_content)
@@ -43,6 +46,10 @@ module Olayemi
       check_note_id note_id
       @notes.delete_at note_id
     end
+	
+	def export
+		@notes
+	end
 
     def search(search_text)
       check_note_input search_text
@@ -52,7 +59,7 @@ module Olayemi
       end
 
       if !result.empty?
-        result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }0
+        result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }
         return "No notes found for the search: #{search_text}"
       end
     end
