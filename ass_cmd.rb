@@ -14,7 +14,6 @@ end
 def create
   puts 'Enter your note: '
   text = gets.chomp
-  
   $author.create text
   ask
 end
@@ -22,10 +21,8 @@ end
 def edit
   puts 'Enter the note id: '
   note_id = gets.chomp.to_i
-
   puts 'Please enter the new note: '
   new_note = gets.chomp
-
   $author.edit note_id, new_note
   ask
 end
@@ -43,7 +40,6 @@ end
 def delete
   puts 'Enter note id to delete: '
   note_id = gets.chomp.to_i
-
   print $author.delete note_id
   print ' deleted'
   ask
@@ -52,7 +48,6 @@ end
 def search
   puts 'Enter a word to search: '
   search = gets.chomp
-
   puts 'Searching...........'
   puts $author.search search
 

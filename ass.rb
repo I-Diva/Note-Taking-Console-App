@@ -3,7 +3,6 @@ require 'sqlite3'
 $db = SQLite3::Database.open "note.db"
 module Olayemi
   # create a class note-taking application that uses modules for namespacing
-  URL = 'https://glowing-heat-3222.firebaseio.com/'
   class NotesApplication
     attr_reader :name, :notes
 
@@ -17,7 +16,6 @@ module Olayemi
       check_note_input note_content
       sql = "INSERT INTO my_notes (`note_content`) VALUES ('#{note_content}')"
 	  $db.execute(sql)
-	  
     end
 
     def get(note_id)
@@ -27,13 +25,12 @@ module Olayemi
 
     def list
       return [] if @notes.empty?
-	  @notes = $db.execute("SELECT * FROM my_notes")
-	  array = []
+	    @notes = $db.execute("SELECT * FROM my_notes")
+	    array = []
 	  for row in @notes
-		array << "Note ID: #{row[0]}\n #{row[1]}\n\nBy Author #{@name}\n\n"
+	    array << "Note ID: #{row[0]}\n #{row[1]}\n\nBy Author #{@name}\n\n"
       end
-	  array
-      
+	  array      
     end
 
     def edit(note_id, new_content)
@@ -57,11 +54,10 @@ module Olayemi
 	  @notes = $db.execute("SELECT * FROM my_notes")
       result = {}
       @notes.each_with_index do |text, index|
-        result[index] = text unless (text =~ /(#{search_text})/).nil?
+      result[index] = text unless (text =~ /(#{search_text})/).nil?
       end
-
       if !result.empty?
-        result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }
+      result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }
         return "No notes found for the search: #{search_text}"
       end
     end
