@@ -41,7 +41,6 @@ def delete
   puts 'Enter note id to delete: '
   note_id = gets.chomp.to_i
   print $author.delete note_id
-  print ' deleted'
   ask
 end
 
@@ -69,16 +68,15 @@ def ask
     print '> create < ', ' > edit < ', ' > list < ', ' > delete < ', ' > search < ',' > export < '
     puts
     puts
-
     action = gets.chomp.downcase
 
-    case action
-    when 'create' then create
-    when 'edit' then edit
-    when 'list' then list
-    when 'delete' then delete
-    when 'search' then search
-	when 'export' then export
+  case action
+  when 'create' then create
+  when 'edit' then edit
+  when 'list' then list
+  when 'delete' then delete
+  when 'search' then search
+  when 'export' then export
     else 
 	  json = File.read('input.json')
 	  obj = JSON.parse(json)

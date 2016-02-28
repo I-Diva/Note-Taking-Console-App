@@ -37,12 +37,21 @@ module Olayemi
       check_note_id note_id
       check_note_input new_content
       check_if_note_exists note_id
-      @notes[note_id] = new_content
+	  note = $db.execute("SELECT * from my_notes where id = #{note_id};")
+	  if !note.empty?
+		$db.execute("UPDATE my_notes SET note_content = '#{new_content}' where id = #{note_id};)")
+	  end
+      
     end
 
     def delete(note_id)
       check_note_id note_id
-      @notes.delete_at note_id
+	  if $db.execute("DELETE FROM my_notes where id = #{note_id};")
+		print "Note Deleted"
+	  else 
+		print "Note not deleted"
+	  end
+      # @notes.delete_at note_id
     end
 	
 	def export
@@ -54,12 +63,15 @@ module Olayemi
 	  @notes = $db.execute("SELECT * FROM my_notes")
       result = {}
       @notes.each_with_index do |text, index|
-      result[index] = text unless (text =~ /(#{search_text})/).nil?
+		result[index] = text unless !(text =~ /(#{search_text})/).nil?
       end
       if !result.empty?
-      result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }
-        return "No notes found for the search: #{search_text}"
+        result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }
+		result
+	  else
+		return "No notes found for the search: #{search_text}"
       end
+	  # result
     end
 
     private
