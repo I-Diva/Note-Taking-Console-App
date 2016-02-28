@@ -63,7 +63,7 @@ module Olayemi
 	  @notes = $db.execute("SELECT * FROM my_notes")
       result = {}
       @notes.each_with_index do |text, index|
-		result[index] = text unless !(text =~ /(#{search_text})/).nil?
+		result[text[0]] = text[1] if !(text[1] =~ /(#{search_text})/).nil?
       end
       if !result.empty?
         result.each { |index, text| return "Note ID: #{index}\n #{text}\n\nBy Author #{@name}\n" }

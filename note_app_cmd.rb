@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 require 'firebase'
 require 'sqlite3'
-require './ass'
+require './note_app'
 include Olayemi
 def start
   puts 'Please Enter the Authors name: '
@@ -53,7 +53,11 @@ def search
   ask
 end
 def export
-	puts $author.export.to_h.to_json
+  puts $author.export.to_h.to_json
+end
+def import
+	# puts $author.export.to_h.to_json
+  print "MY teeth"
 end
 
 def ask
@@ -65,18 +69,18 @@ def ask
   if answer == 'y'
     puts 'What do you want to do?: '
     puts 'Choose from the following: '
-    print '> create < ', ' > edit < ', ' > list < ', ' > delete < ', ' > search < ',' > export < '
-    puts
-    puts
+    puts ['c to create', 'e to edit', 'l to list', 'd to delete', 's to search','x to export','i to import']
+
     action = gets.chomp.downcase
 
   case action
-  when 'create' then create
-  when 'edit' then edit
-  when 'list' then list
-  when 'delete' then delete
-  when 'search' then search
-  when 'export' then export
+  when 'c' then create
+  when 'e' then edit
+  when 'l' then list
+  when 'd' then delete
+  when 's' then search
+  when 'x' then export
+  when 'i' then import
     else 
 	  json = File.read('input.json')
 	  obj = JSON.parse(json)
