@@ -56,6 +56,7 @@ module Olayemi
 	
 	def export
 		@notes
+    
 	end
 
     def search(search_text)

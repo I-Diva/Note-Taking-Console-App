@@ -53,8 +53,14 @@ def search
   ask
 end
 def export
-  puts $author.export.to_h.to_json
+  note_hashed = $author.export.to_h.to_json
+  File::open("input.json","w+") do |f|
+    f.write(note_hashed)
+    f.close
+  end
+  ask
 end
+
 def import
 	# puts $author.export.to_h.to_json
   print "MY teeth"
@@ -69,7 +75,7 @@ def ask
   if answer == 'y'
     puts 'What do you want to do?: '
     puts 'Choose from the following: '
-    puts ['c to create', 'e to edit', 'l to list', 'd to delete', 's to search','x to export','i to import']
+    puts ["\t c to create", "\t e to edit", "\t l to list", "\t d to delete", "\t s to search","\t x to export","\t i to import"]
 
     action = gets.chomp.downcase
 
